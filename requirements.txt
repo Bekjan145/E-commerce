@@ -2,3 +2,5 @@ asgiref==3.9.1
 Django==5.2.5
 djangorestframework==3.16.1
 sqlparse==0.5.3
+pillow==11.3.0
+drf-yasg==1.21.10

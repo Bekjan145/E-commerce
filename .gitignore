@@ -140,6 +140,7 @@ celerybeat.pid
 .venv
 env/
 venv/
+E-commerce/
 ENV/
 env.bak/
 venv.bak/
