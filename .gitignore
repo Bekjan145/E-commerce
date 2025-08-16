@@ -144,10 +144,16 @@ E-commerce/
 ENV/
 env.bak/
 venv.bak/
+.ecommerce/
+.E-commerce/
 
 # Spyder project settings
 .spyderproject
 .spyproject
+
+# PyCharm / VSCode settings
+.idea/
+.vscode/
 
 # Rope project settings
 .ropeproject
