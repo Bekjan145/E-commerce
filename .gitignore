@@ -147,6 +147,9 @@ venv.bak/
 .ecommerce/
 .E-commerce/
 
+# PyCharm / JetBrains IDE
+.idea/
+
 # Spyder project settings
 .spyderproject
 .spyproject
