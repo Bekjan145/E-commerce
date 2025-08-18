@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'store',
 ]
 
-AUTH_USER_MODEL = 'store.CustomUser'
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
