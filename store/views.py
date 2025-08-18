@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
 from store.models import Product, Category
 from store.serializer import ProductSerializer, CategorySerializer, SignupSerializer
@@ -16,23 +15,13 @@ from django.contrib.auth.models import User
 
 
 # Category CRUD
-class CategoryListCreateView(generics.ListCreateAPIView):
+class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
-class CategoryRUDView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
-# Products CRUD
-class ProductListCreateView(generics.ListCreateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-
-
-class ProductRUDView(generics.RetrieveUpdateDestroyAPIView):
+# Product CRUD
+class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
