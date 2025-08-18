@@ -42,7 +42,6 @@ class LogoutView(APIView):
             return Response({'error': "Невалидный токен"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SignupSerializer
