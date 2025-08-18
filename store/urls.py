@@ -1,6 +1,10 @@
 from django.urls import path
-from .views import SignupView
+from store import views as st_views
 
 urlpatterns = [
-    path('signup/', SignupView.as_view(), name='signup'),
+    path('category/', st_views.CategoryListCreateView.as_view()),
+    path('category/<int:pk>/', st_views.CategoryRUDView.as_view()),
+    path('product/', st_views.ProductListCreateView.as_view()),
+    path('product/<int:pk>', st_views.ProductRUDView.as_view()),
+    path('signup/', st_views.SignupView.as_view(), name='signup'),
 ]

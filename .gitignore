@@ -140,9 +140,12 @@ celerybeat.pid
 .venv
 env/
 venv/
+E-commerce/
 ENV/
 env.bak/
 venv.bak/
+.ecommerce/
+.E-commerce/
 
 # PyCharm / JetBrains IDE
 .idea/
@@ -150,6 +153,10 @@ venv.bak/
 # Spyder project settings
 .spyderproject
 .spyproject
+
+# PyCharm / VSCode settings
+.idea/
+.vscode/
 
 # Rope project settings
 .ropeproject
