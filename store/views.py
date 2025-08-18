@@ -5,6 +5,9 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.models import User
+from rest_framework import generics
+from .serializer import SignupSerializer
 
 
 # Create your views here.
@@ -37,3 +40,9 @@ class LogoutView(APIView):
             return Response("Успешный выход")
         except Exception as e:
             return Response({'error': "Невалидный токен"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class SignupView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = SignupSerializer
