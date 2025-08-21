@@ -5,11 +5,11 @@ from django.urls import path, include, re_path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
-from rest_framework.routers import DefaultRouter
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from store.views import LogoutView, CategoryViewSet, ProductViewSet
+from store.views import LogoutView
+from store.urls import router
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,9 +24,6 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-router = DefaultRouter()
-router.register(r'category', CategoryViewSet, basename='category')
-router.register(r'product', ProductViewSet, basename='product')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
