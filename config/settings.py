@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # apps
     'store',
+    'users',
 ]
 
 REST_FRAMEWORK = {
