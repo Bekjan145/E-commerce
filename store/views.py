@@ -1,7 +1,8 @@
-from rest_framework import generics, viewsets
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import CreateAPIView
 
 from store.models import Product, Category
-from store.serializer import ProductSerializer, CategorySerializer, SignupSerializer
+from store.serializers import ProductSerializer, CategorySerializer, SignupSerializer
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, status
@@ -15,13 +16,13 @@ from django.contrib.auth.models import User
 
 
 # Category CRUD
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 # Product CRUD
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -56,6 +57,6 @@ class LogoutView(APIView):
             return Response({'error': "Невалидный токен"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class SignupView(generics.CreateAPIView):
+class SignupView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SignupSerializer
