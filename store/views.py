@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from store.models import Product, Category
-from store.serializers import ProductSerializer, CategorySerializer, SignupSerializer
+from store.serializers import ProductSerializer, CategorySerializer
 
 
 # Create your views here.
