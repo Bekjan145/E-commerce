@@ -1,9 +1,8 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from store.models import Product, Category, Cart, Order, OrderItem
-from store.serializers import ProductSerializer, CategorySerializer, OrderSerializer, CartSerializer, \
-    CartItemSerializers
+from store.models import Product, Category, Cart, CartItem, Order, OrderItem
+from store.serializers import ProductSerializer, CategorySerializer, CartSerializer, CartItemSerializers, OrderSerializer
 
 
 # Create your views here.

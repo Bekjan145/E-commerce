@@ -1,5 +1,6 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
+from store.views import CartView, CartItemView
 
 from store import views as st_views
 
