@@ -17,7 +17,7 @@ class ProductSerializer(serializers.ModelSerializer):
         }
 
 
-class CartItemSerializers(serializers.ModelSerializer):
+class CartItemSerializer(serializers.ModelSerializer):
     product_name = serializers.ReadOnlyField(source='product.name')
 
     class Meta:
@@ -26,7 +26,7 @@ class CartItemSerializers(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializers(many=True, read_only=True)
+    items = CartItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Cart

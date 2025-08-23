@@ -147,9 +147,6 @@ venv.bak/
 .ecommerce/
 .E-commerce/
 
-# PyCharm / JetBrains IDE
-.idea/
-
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -157,6 +154,11 @@ venv.bak/
 # PyCharm / VSCode settings
 .idea/
 .vscode/
+
+# Bruno
+bruno.json
+environments/
+*.bru
 
 # Rope project settings
 .ropeproject
