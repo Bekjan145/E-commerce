@@ -48,3 +48,4 @@ class LogoutView(APIView):
 class SignupView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SignupSerializer
+    permission_classes = (permissions.AllowAny,)

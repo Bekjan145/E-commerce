@@ -1,8 +1,9 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from store.models import Product, Category, Cart, CartItem, Order, OrderItem
-from store.serializers import ProductSerializer, CategorySerializer, CartSerializer, CartItemSerializers, OrderSerializer
+from store.serializers import ProductSerializer, CategorySerializer, CartSerializer, CartItemSerializer, \
+    OrderSerializer
 
 
 # Create your views here.
@@ -20,19 +21,27 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
 
 
-class CartView(generics.RetrieveDestroyAPIView):
+class CartViewSet(viewsets.ModelViewSet):
     serializer_class = CartSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self):
-        cart, created = Cart.objects.get_or_create(user=self.request.user)
-        return cart
-
-
-class CartItemView(generics.CreateAPIView, generics.UpdateAPIView, generics.DestroyAPIView):
-    serializer_class = CartItemSerializers
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        cart, created = Cart.objects.get_or_create(user=self.request.user)
+        serializer.save(user=self.request.user)
+
+
+class CartItemViewSet(viewsets.ModelViewSet):
+    serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        cart, _ = Cart.objects.get_or_create(user=self.request.user)
+        return cart.items.all()
+
+    def perform_create(self, serializer):
+        cart, _ = Cart.objects.get_or_create(user=self.request.user)
         serializer.save(cart=cart)
 
 
