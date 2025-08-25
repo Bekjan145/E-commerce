@@ -1,3 +1,5 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -21,19 +23,14 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
 
 
-class CartViewSet(viewsets.ModelViewSet):
+class CartView(generics.GenericAPIView):
     serializer_class = CartSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        if not user.is_authenticated:
-            return Cart.objects.none()
-        return Cart.objects.filter(user=user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
+    def get(self, request, *args, **kwargs):
+        cart = Cart.objects.filter(user=request.user).first()
+        serializer = self.get_serializer(cart)
+        return Response(serializer.data)
 
 class CartItemViewSet(viewsets.ModelViewSet):
     serializer_class = CartItemSerializer
