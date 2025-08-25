@@ -1,8 +1,10 @@
-from rest_framework.viewsets import ModelViewSet
 from django.contrib.auth.models import User
-from users.serializers import UserProfileSerializers, SignupSerializer
+from rest_framework.exceptions import NotFound
+from users.models import Profile
+from users.serializers import SignupSerializer, ProfileSerializer
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import generics
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,9 +12,18 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.generics import CreateAPIView
 
 
-class UserProfileView(ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserProfileSerializers
+# class UserView
+class UserProfileView(generics.RetrieveUpdateDestroyAPIView, generics.CreateAPIView):
+    serializer_class = ProfileSerializer
+
+    def get_object(self):
+        try:
+            return self.request.user.profile
+        except Profile.DoesNotExist:
+            raise NotFound("Profil topilmadi.")
+
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
 
 
 class LogoutView(APIView):

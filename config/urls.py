@@ -7,7 +7,6 @@ from drf_yasg import openapi
 from rest_framework import permissions
 
 from store.urls import store_router
-from users.urls import users_router
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -27,7 +26,6 @@ urlpatterns = [
     path('', include('store.urls')),
     path('', include('users.urls')),
     path('', include(store_router.urls)),
-    path('', include(users_router.urls)),
 
     # Swagger
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
