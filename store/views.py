@@ -32,6 +32,7 @@ class CartView(generics.GenericAPIView):
         serializer = self.get_serializer(cart)
         return Response(serializer.data)
 
+
 class CartItemViewSet(viewsets.ModelViewSet):
     serializer_class = CartItemSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -57,7 +58,7 @@ class OrderCreateView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         cart = Cart.objects.filter(user=request.user).first()
-        if not cart.items.exists():
+        if not cart or not cart.items.exists():
             return Response({"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST)
 
         order = Order.objects.create(
