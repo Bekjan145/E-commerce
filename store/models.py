@@ -31,7 +31,7 @@ class Product(TimeStampedModel):
     image = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return self.name
+        return f"{self.id}: {self.name}"
 
 
 class Cart(models.Model):
