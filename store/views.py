@@ -26,7 +26,10 @@ class CartViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Cart.objects.filter(user=self.request.user)
+        user = self.request.user
+        if not user.is_authenticated:
+            return Cart.objects.none()
+        return Cart.objects.filter(user=user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -37,7 +40,13 @@ class CartItemViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        cart, _ = Cart.objects.get_or_create(user=self.request.user)
+        user = self.request.user
+        if not user.is_authenticated:
+            return CartItem.objects.none()
+
+        cart = Cart.objects.filter(user=user).first()
+        if not cart:
+            return CartItem.objects.none()
         return cart.items.all()
 
     def perform_create(self, serializer):
@@ -84,6 +93,8 @@ class OrderListView(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Order.objects.none()
         return Order.objects.filter(user=self.request.user)
 
 
@@ -92,4 +103,6 @@ class OrderDetailView(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Order.objects.none()
         return Order.objects.filter(user=self.request.user)
