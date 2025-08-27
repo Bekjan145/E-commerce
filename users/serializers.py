@@ -10,12 +10,29 @@ class ProfileSerializer(serializers.ModelSerializer):
         exclude = ('user',)
 
 
-class UserProfileSerializers(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'profile')
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'profile']
+        read_only_fields = ["username", "email"]
+
+    def update(self, instance, validated_data):
+        profile_data = validated_data.pop('profile', None)
+
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.save()
+
+        if profile_data:
+            profile = instance.profile
+            profile.phone = profile_data.get('phone', profile.phone)
+            profile.address = profile_data.get('address', profile.address)
+            profile.profile_image = profile_data.get('profile_image', profile.profile_image)
+            profile.save()
+
+        return instance
 
 
 class SignupSerializer(serializers.ModelSerializer):
@@ -25,11 +42,3 @@ class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password')
-
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data["username"],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
-        return user
