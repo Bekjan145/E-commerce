@@ -153,6 +153,7 @@ venv.bak/
 
 # PyCharm / VSCode settings
 .idea/
+.idea/*.xml
 .vscode/
 
 # Bruno
